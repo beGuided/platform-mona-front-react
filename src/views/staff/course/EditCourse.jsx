@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useStateContext } from "../../../contexts/ContextProvider.jsx";
 
 
-export default function EditdepartmentsForm(){
+export default function EditCoursesForm(){
   const {id} = useParams()
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState(null)
@@ -13,20 +13,23 @@ export default function EditdepartmentsForm(){
   const navigate = useNavigate()
   const {notification, setNotification} = useStateContext()
 
-  const [department, setDepartment] = useState({
+  const [course, setCourse] = useState({
     // id:null,
-    name:'',
-    max_level:'',
-   
+    title:'',
+    code:'',
+    unit:'',
+    level:'',
+    semester:'',
+       
   })
 
   if(id){
     useEffect(() => {
       setLoading(true)
-      axiosClient.get(`/departments/${id}`)
+      axiosClient.get(`/courses/${id}`)
       .then(({data}) => {
         setLoading(false)
-        setDepartment(data.Department)
+        setCourse(data.Course)
     }).catch(err =>{
       console.log(err)
       setLoading(false)
@@ -37,12 +40,12 @@ export default function EditdepartmentsForm(){
   const onSubmit = (ev)=>{
     // console.log(student)
     ev.preventDefault();
-      if(department.id){
+      if(course.id){
         setErrors(null)
-        axiosClient.post(`/departments/${id}`, department)
+        axiosClient.post(`/courses/${id}`, course)
         .then(() =>{
-          setNotification('department was successful updated!')
-          navigate('/departments')
+          setNotification('course was successful updated!')
+          navigate('/courses')
         })
           .catch(err =>{
             const response = err.response;
@@ -52,11 +55,11 @@ export default function EditdepartmentsForm(){
           })
       }
       else{
-        axiosClient.post(`/departments`, department)
+        axiosClient.post(`/courses`, course)
         .then(() =>{
           setErrors(null)
-          setNotification('department was created !')
-          navigate('/departments')
+          setNotification('course was created !')
+          navigate('/courses')
         })
           .catch(err =>{
             console.log(err)
@@ -96,12 +99,18 @@ export default function EditdepartmentsForm(){
               {!loading &&
               <div className="form">
                 <form onSubmit={onSubmit}>
-                   {department.id && <h2>Update department</h2>}
-                   {!department.id && <h2>New department</h2>}
-                  <label>Department Name </label>
-                  <input type='text'value={department.name} onChange={ev => setDepartment({...department, name: ev.target.value})} placeholder="Department Name"/>
-                  <label>Max_level</label>
-                  <input type='text'value={department.max_level} onChange={ev => setDepartment({...department, max_level: ev.target.value})} placeholder="Max Level"/>
+                   {course.id && <h2>Update course</h2>}
+                   {!course.id && <h2>New course</h2>}
+                  <label>Course Name </label>
+                  <input type='text'value={course.title} onChange={ev => setCourse({...course, title: ev.target.value})} placeholder="course title"/>
+                  <label>Course Code </label>
+                  <input type='text'value={course.code} onChange={ev => setCourse({...course, code: ev.target.value})} placeholder="course code"/>
+                  <label>Course Unit </label>
+                  <input type='text'value={course.unit} onChange={ev => setCourse({...course, unit: ev.target.value})} placeholder="course unit"/>
+                  <label>Course Level </label>
+                  <input type='text'value={course.level} onChange={ev => setCourse({...course, level: ev.target.value})} placeholder="course level"/>
+                  <label>Course Semester </label>
+                  <input type='text'value={course.semester} onChange={ev => setCourse({...course, semester: ev.target.value})} placeholder="course semester"/>
                   <button className="btn">Save</button>
                 </form>
                 </div>

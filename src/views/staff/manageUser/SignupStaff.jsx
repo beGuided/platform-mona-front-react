@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useStateContext } from "../../../contexts/ContextProvider.jsx";
 
 
-export default function EditdepartmentsForm(){
+export default function EditStaffForm(){
   const {id} = useParams()
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState(null)
@@ -13,20 +13,23 @@ export default function EditdepartmentsForm(){
   const navigate = useNavigate()
   const {notification, setNotification} = useStateContext()
 
-  const [department, setDepartment] = useState({
+  const [staff, setStaff] = useState({
     // id:null,
     name:'',
-    max_level:'',
+    staff_id:'',
+    role: '',
+    email: '',
+    Password: '',
    
   })
 
   if(id){
     useEffect(() => {
       setLoading(true)
-      axiosClient.get(`/departments/${id}`)
+      axiosClient.get(`/students/${id}`)
       .then(({data}) => {
         setLoading(false)
-        setDepartment(data.Department)
+        setStudent(data.student)
     }).catch(err =>{
       console.log(err)
       setLoading(false)
@@ -37,12 +40,12 @@ export default function EditdepartmentsForm(){
   const onSubmit = (ev)=>{
     // console.log(student)
     ev.preventDefault();
-      if(department.id){
+      if(student.id){
         setErrors(null)
-        axiosClient.post(`/departments/${id}`, department)
+        axiosClient.post(`/students/${id}`, student)
         .then(() =>{
-          setNotification('department was successful updated!')
-          navigate('/departments')
+          setNotification('student was successful updated!')
+          navigate('/students')
         })
           .catch(err =>{
             const response = err.response;
@@ -52,11 +55,11 @@ export default function EditdepartmentsForm(){
           })
       }
       else{
-        axiosClient.post(`/departments`, department)
+        axiosClient.post(`/students`, student)
         .then(() =>{
           setErrors(null)
-          setNotification('department was created !')
-          navigate('/departments')
+          setNotification('student was created !')
+          navigate('/students')
         })
           .catch(err =>{
             console.log(err)
@@ -96,12 +99,19 @@ export default function EditdepartmentsForm(){
               {!loading &&
               <div className="form">
                 <form onSubmit={onSubmit}>
-                   {department.id && <h2>Update department</h2>}
-                   {!department.id && <h2>New department</h2>}
-                  <label>Department Name </label>
-                  <input type='text'value={department.name} onChange={ev => setDepartment({...department, name: ev.target.value})} placeholder="Department Name"/>
-                  <label>Max_level</label>
-                  <input type='text'value={department.max_level} onChange={ev => setDepartment({...department, max_level: ev.target.value})} placeholder="Max Level"/>
+                   {staff.id && <h2>Update Staff</h2>}
+                   {!staff.id && <h2>New Staff</h2>}
+                  <label>Full Name </label>
+                  <input type='text'value={staff.name} onChange={ev => setStaff({...staff, name: ev.target.value})} placeholder="Full Name"/>
+                  <label>Staff id</label>
+                  <input type='text'value={staff.staff_id} onChange={ev => setStaff({...staff, staff_id: ev.target.value})} placeholder="Staff is"/>
+                  <label>Role</label>
+                  <input type='text'value={staff.role} onChange={ev => setStaff({...staff, role: ev.target.value})} placeholder="Role"/>
+                  <label>Email</label>
+                  <input type='email'value={staff.email} onChange={ev => setStaff({...staff, email: ev.target.value})} placeholder="Email"/>
+                  <label>password </label>
+                  <input type='password'value={staff.password} onChange={ev => setStaff({...staff, password: ev.target.value})} placeholder="Password "/>
+ 
                   <button className="btn">Save</button>
                 </form>
                 </div>

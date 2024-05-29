@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useStateContext } from "../../../contexts/ContextProvider.jsx";
 
 
-export default function EditdepartmentsForm(){
+export default function EditSemestersForm(){
   const {id} = useParams()
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState(null)
@@ -13,20 +13,19 @@ export default function EditdepartmentsForm(){
   const navigate = useNavigate()
   const {notification, setNotification} = useStateContext()
 
-  const [department, setDepartment] = useState({
+  const [semester, setSemester] = useState({
     // id:null,
-    name:'',
-    max_level:'',
-   
+    title:'',
+       
   })
 
   if(id){
     useEffect(() => {
       setLoading(true)
-      axiosClient.get(`/departments/${id}`)
+      axiosClient.get(`/semesters/${id}`)
       .then(({data}) => {
         setLoading(false)
-        setDepartment(data.Department)
+        setSemester(data)
     }).catch(err =>{
       console.log(err)
       setLoading(false)
@@ -37,12 +36,12 @@ export default function EditdepartmentsForm(){
   const onSubmit = (ev)=>{
     // console.log(student)
     ev.preventDefault();
-      if(department.id){
+      if(semester.id){
         setErrors(null)
-        axiosClient.post(`/departments/${id}`, department)
+        axiosClient.post(`/semesters/${id}`, semester)
         .then(() =>{
-          setNotification('department was successful updated!')
-          navigate('/departments')
+          setNotification('semester was successful updated!')
+          navigate('/semesters')
         })
           .catch(err =>{
             const response = err.response;
@@ -52,11 +51,11 @@ export default function EditdepartmentsForm(){
           })
       }
       else{
-        axiosClient.post(`/departments`, department)
+        axiosClient.post(`/semesters`, semester)
         .then(() =>{
           setErrors(null)
-          setNotification('department was created !')
-          navigate('/departments')
+          setNotification('semester was created !')
+          navigate('/semesters')
         })
           .catch(err =>{
             console.log(err)
@@ -96,13 +95,11 @@ export default function EditdepartmentsForm(){
               {!loading &&
               <div className="form">
                 <form onSubmit={onSubmit}>
-                   {department.id && <h2>Update department</h2>}
-                   {!department.id && <h2>New department</h2>}
-                  <label>Department Name </label>
-                  <input type='text'value={department.name} onChange={ev => setDepartment({...department, name: ev.target.value})} placeholder="Department Name"/>
-                  <label>Max_level</label>
-                  <input type='text'value={department.max_level} onChange={ev => setDepartment({...department, max_level: ev.target.value})} placeholder="Max Level"/>
-                  <button className="btn">Save</button>
+                   {semester.id && <h2>Update semester</h2>}
+                   {!semester.id && <h2>New semester</h2>}
+                  <label>semester Name </label>
+                  <input type='text'value={semester.title} onChange={ev => setSemester({...semester, title: ev.target.value})} placeholder="semester title"/>
+                  <button classtitle="btn">Save</button>
                 </form>
                 </div>
               }

@@ -37,9 +37,9 @@ export default function Login(){
             setLoading(false);
               // console.log(err)
                const response = err.response;
-               if(response && response.status === 422){
-                  setErrors(response.data.errors);
-               } 
+               if(response ){
+                  setError(response.data.message);
+               }
                else{
               setError('Network error')
              }

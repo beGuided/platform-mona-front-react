@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useStateContext } from "../../../contexts/ContextProvider.jsx";
 
 
-export default function EditdepartmentsForm(){
+export default function EditresultsForm(){
   const {id} = useParams()
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState(null)
@@ -13,20 +13,24 @@ export default function EditdepartmentsForm(){
   const navigate = useNavigate()
   const {notification, setNotification} = useStateContext()
 
-  const [department, setDepartment] = useState({
+  const [result, setResult] = useState({
     // id:null,
-    name:'',
-    max_level:'',
-   
+    email:'',
+    matric_number:'',
+    semester:'',
+    score:'',
+    year:'',
+    course_id:'',
+       
   })
 
   if(id){
     useEffect(() => {
       setLoading(true)
-      axiosClient.get(`/departments/${id}`)
+      axiosClient.get(`/results/${id}`)
       .then(({data}) => {
         setLoading(false)
-        setDepartment(data.Department)
+        setResult(data.result)
     }).catch(err =>{
       console.log(err)
       setLoading(false)
@@ -37,12 +41,12 @@ export default function EditdepartmentsForm(){
   const onSubmit = (ev)=>{
     // console.log(student)
     ev.preventDefault();
-      if(department.id){
+      if(result.id){
         setErrors(null)
-        axiosClient.post(`/departments/${id}`, department)
+        axiosClient.post(`/results/${id}`, result)
         .then(() =>{
-          setNotification('department was successful updated!')
-          navigate('/departments')
+          setNotification('result was successful updated!')
+          navigate('/results')
         })
           .catch(err =>{
             const response = err.response;
@@ -52,11 +56,11 @@ export default function EditdepartmentsForm(){
           })
       }
       else{
-        axiosClient.post(`/departments`, department)
+        axiosClient.post(`/results`, result)
         .then(() =>{
           setErrors(null)
-          setNotification('department was created !')
-          navigate('/departments')
+          setNotification('result was created !')
+          navigate('/results')
         })
           .catch(err =>{
             console.log(err)
@@ -74,7 +78,7 @@ export default function EditdepartmentsForm(){
 
         <>
          
-          <div className="login-signup-form animated fadeInDown">
+          <div className="card animated fadeInDown">
             { loading && (
               <div className="text-center">Loading...</div>
                )}
@@ -94,14 +98,26 @@ export default function EditdepartmentsForm(){
                     <p>{notification}</p>
                 </div>}
               {!loading &&
-              <div className="form">
+              <div className="">
                 <form onSubmit={onSubmit}>
-                   {department.id && <h2>Update department</h2>}
-                   {!department.id && <h2>New department</h2>}
-                  <label>Department Name </label>
-                  <input type='text'value={department.name} onChange={ev => setDepartment({...department, name: ev.target.value})} placeholder="Department Name"/>
-                  <label>Max_level</label>
-                  <input type='text'value={department.max_level} onChange={ev => setDepartment({...department, max_level: ev.target.value})} placeholder="Max Level"/>
+                   {result.id && <h2>Update result</h2>}
+                   {!result.id && <h2>New result</h2>}
+                  <label>Name </label>
+                  <input type='text'value={result.name} onChange={ev => setResult({...result, name: ev.target.value})} placeholder="email"/>
+                  <label>Mat Number </label>
+                  <input type='text'value={result.matric_number} onChange={ev => setResult({...result, matric_number: ev.target.value})} placeholder="mat number"/>
+                  <label> Semester </label>
+                  <input type='text'value={result.semester} onChange={ev => setResult({...result, semester: ev.target.value})} placeholder="semester"/>
+                  <label>Exam </label>
+                  <input type='text'value={result.exam} onChange={ev => setResult({...result, exam: ev.target.value})} placeholder="exam"/>
+                  <label>CA </label>
+                  <input type='text'value={result.CA} onChange={ev => setResult({...result, CA: ev.target.value})} placeholder="CA"/>
+                  <label>Score </label>
+                  <input type='text'value={result.score} onChange={ev => setResult({...result, score: ev.target.value})} placeholder="score"/>
+                  <label>Year </label>
+                  <input type='text'value={result.year} onChange={ev => setResult({...result, year: ev.target.value})} placeholder="year"/>
+                  <label>Course </label>
+                  <input type='text'value={result.course_id} onChange={ev => setResult({...result, course_id: ev.target.value})} placeholder="course"/>
                   <button className="btn">Save</button>
                 </form>
                 </div>

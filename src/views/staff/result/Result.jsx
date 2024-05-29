@@ -7,18 +7,18 @@ import { Link } from "react-router-dom";
 
 export default function Student(){
 
-const [departments, setDepartments] = useState([]);
+const [results, setResult] = useState([]);
 const [loading, setLoading] = useState(false);
 const [error, setError] = useState(null)
 
 
 
-const fetchDepartment = () => {
+const fetchResult = () => {
   setLoading(true)
-  axiosClient.get('/departments') 
+  axiosClient.get('/results') 
   .then(({data}) => {
     setLoading(false)
-    setDepartments(data.Departments);
+    setResult(data.results);
   })
   .catch(() => {
     setLoading(false)
@@ -26,17 +26,17 @@ const fetchDepartment = () => {
   
 }
 useEffect(() =>{
-  fetchDepartment()
+  fetchResult()
 },[])
 
-const onDelete = (department) => {
-  if(!window.confirm("Are you sure you want to delete this department?")){
+const onDelete = (result) => {
+  if(!window.confirm("Are you sure you want to delete this result?")){
       return
   }else{
-    axiosClient.delete(`/departments/${department.id}`)
+    axiosClient.delete(`/result/${result.id}`)
     .then(() =>{
         //TODO Show notification
-        fetchDepartment()
+        fetchResult()
         setError(null )
     })
     .catch( err =>{
@@ -52,7 +52,8 @@ const onDelete = (department) => {
         <div>
           <div style={{display:'flex', justifyContent:'space-between', alignItems:'center'}}>
             <h1>Student</h1>
-            <Link to="/add-department" className="btn-add"> Add new</Link>
+            <Link to="/add-result" className="btn-add"> Filter </Link>
+            <Link to="/add-result" className="btn-add"> Add new</Link>
           </div>
 
           {error &&  <div className="alert">    
@@ -63,8 +64,14 @@ const onDelete = (department) => {
               <thead>
                 <tr>
                   <th> ID</th>
-                  <th> Name</th>
-                  <th> Max Level</th>
+                  <th> name</th>
+                  <th> mat num</th>
+                  <th> semester</th>
+                  <th> CA</th>
+                  <th> exam</th>
+                  <th> score</th>
+                  <th> year</th>
+                  <th> course id</th>
                 </tr>
               </thead>
               {loading && 
@@ -78,24 +85,30 @@ const onDelete = (department) => {
               }
 
               
-             {departments ? (
+             {results ? (
                 <tbody>
                   
-                {departments.map(department => (
+                {results.map(result => (
                   
-                  <tr key={department.id}>
-                    <td>{department.id}</td>
-                    <td>{department.name}</td>
-                    <td>{department.max_level}</td>
+                  <tr key={result.id}>
+                    <td>{result.id}</td>
+                    <td>{result.name}</td>
+                    <td>{result.matric_number}</td>
+                    <td>{result.semester}</td>
+                    <td>{result.CA}</td>
+                    <td>{result.exam}</td>
+                    <td>{result.score}</td>
+                    <td>{result.year}</td>
+                    <td>{result.course_id}</td>
                     <td>
-                      <Link className="btn-edit" to={'/departments/'+department.id}>Edit</Link> &nbsp;&nbsp;
-                      <button className="btn-delete" onClick={ () => onDelete(department)} > Delete</button>
+                      <Link className="btn-edit" to={'/results/'+result.id}>Edit</Link> &nbsp;&nbsp;
+                      <button className="btn-delete" onClick={ () => onDelete(result)} > Delete</button>
                     </td>
                   </tr>
 
                 ))}
               </tbody>
-              ) : (<h3>No Department created</h3>
+              ) : (<h3>No result created</h3>
                 )}
 
                 

@@ -47,14 +47,19 @@ return (
                <div>
                <Link to="/dashboard">Dashboard</Link> 
                <Link to="/admin-profile">Profile</Link> 
-               <Link to="/dashboard">Dashboard</Link> 
                 </div> 
            
              {/* links for only Admin  start*/}
             {user.role === 'admin' && (
                 <div>
+                 <Link to="/departments">Manage Department</Link> 
                 <Link to="/staffs">Manage Staff</Link> 
                 <Link to="/students">Manage Student</Link> 
+                <Link to="/semesters">Manage Semester</Link> 
+                <Link to="/courses">Manage Course</Link> 
+                <Link to="/results">Manage Result</Link> 
+                <Link to="/staffs">Manage Level</Link> 
+                <Link to="/staffs">Manage Fees</Link> 
                 </div>
             )}
             {/* end */}
@@ -62,6 +67,7 @@ return (
             {user.role === 'staff' && (
                 <div>
               <Link to={'/users/'+user.id}>Edit Profile</Link> 
+              <Link to={'/users/'+user.id}>Manage Result</Link> 
               
                 </div>
             )}

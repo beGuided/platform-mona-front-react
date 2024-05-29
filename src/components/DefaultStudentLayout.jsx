@@ -1,16 +1,15 @@
 import { useEffect,React, useState } from "react";
-import {Link, Outlet, Navigate} from "react-router-dom";
+import {Link, Outlet,useNavigate, Navigate} from "react-router-dom";
 import { useStateContext } from "../contexts/ContextProvider";
 import axiosClient from "../axios-client";
 
-
 export default function DefaultStudentLayouth(){
-const {user, token, notification, setUser,setToken}  = useStateContext();
+    const {user, token, notification, setUser,setToken}  = useStateContext();
 const [notificationError, setError] = useState(null)
-   
+
 
 useEffect(() => {
-    const fetchUser = async ()=> {
+   async function fetchUser() {
         try {
             const response = await axiosClient.get('/user'); 
             const data = await response
@@ -20,9 +19,12 @@ useEffect(() => {
              setError(response);
             console.error('Error fetching User:', error);
         }
-   };
-   fetchUser();
+   }
+    fetchUser();
+
 },[]);
+
+
 
 if(!token){
     return <Navigate to="/student-login" />

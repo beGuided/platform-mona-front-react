@@ -4,18 +4,28 @@ import {createBrowserRouter, Navigate} from "react-router-dom";
 import StudentLogin from "./views/student/StudentLogin.jsx";
 import StudentDashboard from "./views/student/StudentDashboard.jsx";
 import StudentProfile from "./views/student/profiles/StudentProfile.jsx";
-import EditStudentProfile from "./views/student/profiles/EditProfile.jsx";
+import UpdateStudentProfile from "./views/student/profiles/EditProfile.jsx";
+// import UpdateStudentProfile from "./views/Profile.jsx";
 
 /****  staff route ******/
 
 import AdminDashboard from "./views/staff/AdminDashboard.jsx";
 import Login from "./views/staff/Login.jsx";
-import SignupStaff from "./views/staff/SignupStaff.jsx";
-import SignupStudent from "./views/staff/SignupStudent.jsx";
+import Department from "./views/staff/department/Department.jsx";
+import EditDepartment from "./views/staff/department/EditDepartment.jsx";
+import SignupStaff from "./views/staff/manageUser/SignupStaff.jsx";
+import SignupStudent from "./views/staff/manageUser/SignupStudent.jsx";
 import AdminProfile from "./views/staff/profiles/AdminProfile.jsx";
 import EditProfile from "./views/staff/profiles/EditProfile.jsx";
-import Student from "./views/staff/Student.jsx";
-import Staff from "./views/staff/Staff.jsx";
+import Student from "./views/staff/manageUser/Student.jsx";
+import Staff from "./views/staff/manageUser/Staff.jsx";
+import Semester from "./views/staff/semester/Semester.jsx";
+import EditSemester from "./views/staff/semester/EditSemester.jsx";
+import Course from "./views/staff/course/Course.jsx";
+import EditCourse from "./views/staff/course/EditCourse.jsx";
+import Result from "./views/staff/result/Result.jsx";
+import EditResult from "./views/staff/result/EditResult.jsx";
+
 
 /****  super Admin route ******/
 import Users from "./views/admin/Users.jsx";
@@ -141,6 +151,54 @@ const router = createBrowserRouter([
                 element:<EditProfile key="profileUpdate"/>
             },
             {
+                path:'/departments',
+                element:<Department key="department"/>
+            },
+            {
+                path:'/add-department',
+                element:<EditDepartment key="addeDepartment"/>
+            },
+            {
+                path:'/departments/:id',
+                element:<EditDepartment key="editDepartment"/>
+            },
+            {
+                path:'/semesters',
+                element:<Semester key="semester"/>
+            },
+            {
+                path:'/add-semester',
+                element:<EditSemester key="addeSemester"/>
+            },
+            {
+                path:'/semesters/:id',
+                element:<EditSemester key="editSemester"/>
+            },
+            {
+                path:'/courses',
+                element:<Course key="course"/>
+            },
+            {
+                path:'/add-course',
+                element:<EditCourse key="addeCourse"/>
+            },
+            {
+                path:'/courses/:id',
+                element:<EditCourse key="editCourse"/>
+            },
+            {
+                path:'/results',
+                element:<Result key="Result"/>
+            },
+            {
+                path:'/add-result',
+                element:<EditResult key="addeResult"/>
+            },
+            {
+                path:'/results/:id',
+                element:<EditResult key="editCourse"/>
+            },
+            {
                 path:'/staffs',
                 element:<Staff />
             },
@@ -150,6 +208,10 @@ const router = createBrowserRouter([
             },
             {
                 path:'/add-student',
+                element:<SignupStudent />
+            },
+            {
+                path:'/edit-student/:id',
                 element:<SignupStudent />
             },
              {
@@ -165,18 +227,18 @@ const router = createBrowserRouter([
                 path:'/all-users/:id',
                 element:<UserForm key="userUpdate"/>
             },
-            {
-                path:'/results',
-                element:<Sport />
-            },
-            {
-                path:'/results/',
-                element:<SportForm key="sportCreate"/>
-            },
-            {
-                path:'/sports/:id',
-                element:<SportForm key="sportUpdate"/>
-            },
+            // {
+            //     path:'/results',
+            //     element:<Sport />
+            // },
+            // {
+            //     path:'/results/',
+            //     element:<SportForm key="sportCreate"/>
+            // },
+            // {
+            //     path:'/sports/:id',
+            //     element:<SportForm key="sportUpdate"/>
+            // },
 
         ]
     },
@@ -198,12 +260,12 @@ const router = createBrowserRouter([
                 element:<StudentProfile />
             },
             {
-                path:'/profile-edit/:id',
-                element:<EditStudentProfile key="profileUpdate"/>
+                path:'/update-profile/:id',
+                element:<UpdateStudentProfile key="profileUpdate"/>
             },
             {
-                path:'/profile-edits',
-                element:<EditStudentProfile key="profileCreate"/>
+                path:'/create-profile',
+                element:<UpdateStudentProfile key="profileCreate"/>
             },
             // {
             //     path:'/all-users/:id',

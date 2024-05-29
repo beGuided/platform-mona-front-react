@@ -1,9 +1,26 @@
 import { useStateContext } from "../../contexts/ContextProvider";
 import {Link} from "react-router-dom"
+import axiosClient from "../../axios-client";
+import { useEffect,React, useState } from "react";
 
 
-export default function userProfile(createLink){
-  const {user,}  = useStateContext();
+export default function userProfile(props){
+  const {user,setUser}  = useStateContext();
+  const {editProfile} = props
+// if(user.id){
+//   useEffect(() => {
+//     axiosClient.get(`/student-profiles/${user.id}`)
+//     .then(({data}) => {
+//       if(data){
+//         setEditProfile('Edit')
+//       }
+     
+//   }).catch(err =>{
+//     console.log(err)
+//   })
+// },[])
+// }
+  
     return (
         < div className=''>
           <div>
@@ -29,12 +46,8 @@ export default function userProfile(createLink){
              <ul>
               {user.sports.map(sport=>(
                 <li key={sport.id}>{sport.name}</li>
-                
-
               ))}
               </ul> */}
-              
-
               {/* <div style="margin: 24px 0;"> */}
               <div>
                 <a href="#"><i className="fa fa-dribbble"></i></a> 
@@ -42,11 +55,20 @@ export default function userProfile(createLink){
                 <a href="#"><i className="fa fa-linkedin"></i></a>  
                 <a href="#"><i className="fa fa-facebook"></i></a> 
               </div><br></br>
-              {user.profile ?(
-              <Link className="btn-edit" to={'/profiles/'+user.id}>Edit</Link>):(
-                <Link className="btn-edit" to={{createLink}}>Create profile</Link>
+              {/* {user.profile ?(
+              <Link className="btn-edit" to={'/edit-profiles/'+user.id}>Edit</Link>):(
+                <>
+                  <Link className="btn-edit" to={createLink}>Create profile </Link>
+                <Link className="btn-edut" to={'/create-profile'}>create</Link>
+              </>
+            
               )}
-             
+              */}
+              <Link className="btn-edit" to={'/update-profile/'+user.id}>Edit</Link>
+                
+                  <Link className="btn-edit" to={editProfile}>Create profile </Link>
+                {/* <Link className="btn-edut" to={'/create-profile'}>create</Link> */}
+            
               {/* <span className="btn-edit" to={'/users/'+user.id}>Edit Profile</span> &nbsp; */}
 
             

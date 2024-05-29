@@ -5,7 +5,7 @@ const StateContext = createContext ( {
     user:null,
     token:null,
     notificaton:null,
-    setStudent:() =>{},
+    // setStudent:() =>{},
     setUser:() =>{},
     setToken:() => {},
     setNotification:()=>{}

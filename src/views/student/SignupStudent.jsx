@@ -76,22 +76,17 @@ export default function Signup() {
 
               <input required ref={firstNameRef} placeholder="First Name" />
               <input required ref={lastNameRef} placeholder="Last Name" />
-              <input
-                required
-                ref={matNumberRef}
-                type="number"
-                placeholder="Matric Number"
-              />
+              <input required ref={matNumberRef} type="number" placeholder="Matric Number"/>
               <input
                 required
                 ref={passwordRef}
                 type="password"
                 placeholder="Password"
               />
-              <button className="btn btn-block"> Sign Up</button>
-              <p className="message">
+              <button className="btn btn-block"> Add Student</button>
+              {/* <p className="message">
                 Already Registered? <Link to="/login"> Login </Link>
-              </p>
+              </p> */}
             </form>
           </div>
         </div>

@@ -43,7 +43,7 @@ export default function EditProfilesForm(){
     ev.preventDefault();
       if(profile.id){
         setErrors(null)
-        axiosClient.patch(`/profiles/${id}`, profile)
+        axiosClient.post(`/profiles/${id}`, profile)
         .then(() =>{
           setNotification('profile was successful updated!')
           navigate('/admin-profile')
@@ -65,8 +65,11 @@ export default function EditProfilesForm(){
           .catch(err =>{
             console.log(err)
             const response = err.response;
+            if(response && response.status === 422){
+              setErrors(response.data.errors)
+            }
             if(response){
-              setError(response.message)
+              setError(response.data.message)
             }
           })
       }
@@ -74,8 +77,8 @@ export default function EditProfilesForm(){
         return (
 
         <>
-            {profile.id && <h2>Update profile:{profile.email}</h2>}
-            {!profile.id && <h2>New profile</h2>}
+            {profile.id && <h1>Update Profile:{profile.email}</h1>}
+            {!profile.id && <h1>Create Profile</h1>}
           <div className="card animated fadeInDown">
             { loading && (
               <div className="text-center">Loading...</div>
@@ -98,8 +101,8 @@ export default function EditProfilesForm(){
               {!loading &&
               
                 <form onSubmit={onSubmit}>
-                   {profile.id && <h2>Update User</h2>}
-                   {!profile.id && <h2>New User</h2>}
+                   {/* {profile.id && <h2>Update User</h2>}
+                   {!profile.id && <h2>New User</h2>} */}
                   <label>Gender </label>
                   <input type='text'value={profile.gender} onChange={ev => setProfile({...profile, gender: ev.target.value})} placeholder="Gender"/>
                   <label>Address</label>
